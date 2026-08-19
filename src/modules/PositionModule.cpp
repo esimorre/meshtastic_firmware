@@ -384,8 +384,8 @@ void PositionModule::sendOurPosition(NodeNum dest, bool wantReplies, uint8_t cha
                     1000U);
         service->sendClientNotification(notification);
         sleepOnNextExecution = true;
-        LOG_DEBUG("Start next execution in 5s, then sleep");
-        setIntervalFromNow(FIVE_SECONDS_MS);
+        LOG_DEBUG("Start next execution in 1mn, then sleep");
+        setIntervalFromNow(ONE_MINUTE_MS);
     }
 }
 
