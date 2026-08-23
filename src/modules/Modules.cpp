@@ -186,7 +186,7 @@ void setupModules()
     new HostMetricsModule();
 #endif
 #if HAS_TELEMETRY
-    new DeviceTelemetryModule();
+    deviceTelemetryModule = new DeviceTelemetryModule();
 #endif
 #if HAS_TELEMETRY && HAS_SENSOR && !MESHTASTIC_EXCLUDE_ENVIRONMENTAL_SENSOR
     if (moduleConfig.has_telemetry &&

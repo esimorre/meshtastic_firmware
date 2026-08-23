@@ -25,6 +25,11 @@ class DeviceTelemetryModule : private concurrency::OSThread,
     }
     virtual bool wantUIFrame() { return false; }
 
+    /**
+     * Send our Telemetry into the mesh
+     */
+    bool sendTelemetry(NodeNum dest = NODENUM_BROADCAST, bool phoneOnly = false);
+
   protected:
     /** Called to handle a particular incoming message
     @return true if you've guaranteed you've handled this message and no other handlers should be considered for it
@@ -32,10 +37,6 @@ class DeviceTelemetryModule : private concurrency::OSThread,
     virtual bool handleReceivedProtobuf(const meshtastic_MeshPacket &mp, meshtastic_Telemetry *p) override;
     virtual meshtastic_MeshPacket *allocReply() override;
     virtual int32_t runOnce() override;
-    /**
-     * Send our Telemetry into the mesh
-     */
-    bool sendTelemetry(NodeNum dest = NODENUM_BROADCAST, bool phoneOnly = false);
 
     /**
      * Get the uptime in seconds
@@ -65,3 +66,5 @@ class DeviceTelemetryModule : private concurrency::OSThread,
     uint32_t uptimeWrapCount;
     uint32_t uptimeLastMs;
 };
+
+extern DeviceTelemetryModule *deviceTelemetryModule;

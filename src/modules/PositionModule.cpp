@@ -16,6 +16,7 @@
 #include "mesh/compression/unishox2.h"
 #include "meshUtils.h"
 #include "meshtastic/atak.pb.h"
+#include "modules/Telemetry/DeviceTelemetry.h"
 #include "sleep.h"
 #include "target_specific.h"
 #include <Throttle.h>
@@ -376,6 +377,11 @@ void PositionModule::sendOurPosition(NodeNum dest, bool wantReplies, uint8_t cha
     if (IS_ONE_OF(config.device.role, meshtastic_Config_DeviceConfig_Role_TRACKER,
                   meshtastic_Config_DeviceConfig_Role_TAK_TRACKER) &&
         config.power.is_power_saving) {
+#if HAS_TELEMETRY
+        // Report battery/device state alongside position since we're about to sleep and won't be asked again soon
+        if (deviceTelemetryModule && moduleConfig.telemetry.device_telemetry_enabled)
+            deviceTelemetryModule->sendTelemetry();
+#endif
         meshtastic_ClientNotification *notification = clientNotificationPool.allocZeroed();
         notification->level = meshtastic_LogRecord_Level_INFO;
         notification->time = getValidTime(RTCQualityFromNet);
@@ -384,8 +390,9 @@ void PositionModule::sendOurPosition(NodeNum dest, bool wantReplies, uint8_t cha
                     1000U);
         service->sendClientNotification(notification);
         sleepOnNextExecution = true;
-        LOG_DEBUG("Start next execution in 1mn, then sleep");
-        setIntervalFromNow(ONE_MINUTE_MS);
+        uint32_t wakeMs = Default::getConfiguredOrDefaultMs(config.power.min_wake_secs, default_min_wake_secs);
+        LOG_DEBUG("Start next execution in %ims, then sleep", wakeMs);
+        setIntervalFromNow(wakeMs);
     }
 }
 

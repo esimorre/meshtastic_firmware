@@ -18,6 +18,8 @@
 #define MAGIC_USB_BATTERY_LEVEL 101
 static constexpr uint16_t TX_HISTORY_KEY_DEVICE_TELEMETRY = 0x8001;
 
+DeviceTelemetryModule *deviceTelemetryModule;
+
 int32_t DeviceTelemetryModule::runOnce()
 {
 
