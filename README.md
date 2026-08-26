@@ -34,6 +34,13 @@ Meshtastic enables text messaging, location sharing, and telemetry over a decent
 
 Join our community and help improve Meshtastic! 🚀
 
+```
+# build sur github (KO local sous Windows)
+# workflow Build One Target, arch esp32s3, board heltec-wireless-tracker
+# mise à jour partielle, on garde la config (pas le factory.bin)
+esptool --port COM4 --baud 115200 write_flash 0x10000 firmware-XXXX.bin
+```
+
 ## Stats
 
 ![Alt](https://repobeats.axiom.co/api/embed/8025e56c482ec63541593cc5bd322c19d5c0bdcf.svg "Repobeats analytics image")
