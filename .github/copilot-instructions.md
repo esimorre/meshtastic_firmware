@@ -2,6 +2,12 @@
 
 This document provides context and guidelines for AI assistants working with the Meshtastic firmware codebase.
 
+## Prior session context notes
+
+`.github/copilot-context/` holds synthesized notes from past AI-assisted sessions (kept in-repo so
+they survive forks). Skim the filenames there and open any that are relevant to the current task
+before starting non-trivial work.
+
 ## Project Overview
 
 Meshtastic is an open-source LoRa mesh networking project for long-range, low-power communication without relying on internet or cellular infrastructure. The firmware enables text messaging, location sharing, and telemetry over a decentralized mesh network. The project uses **C++17** as its language standard across all platforms.
